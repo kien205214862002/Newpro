@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=go01-airbnb
+    volumes:
+      - database_mysql:/var/lib/mysql
+    # Các services trong cùng một network, thì có thể gọi tới nhau bằng tên của chúng
+    networks:
+      - go01_airbnb
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - go01_airbnb
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - 4000:4000
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - go01_airbnb
+    command: [ "/app/wait-for", "mysql:3306", "--", "/app/go-airbnb" ]
+
+volumes:
+  database_mysql:
+
+
+networks:
+  go01_airbnb:
+    driver: bridge

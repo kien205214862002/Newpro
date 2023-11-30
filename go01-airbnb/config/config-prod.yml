@@ -1,0 +1,26 @@
+app:
+  Version: 1.0.0
+  Mode: development
+  Port: 4000
+  Secret: go01-airbnb-secret
+  MigrationURL: file://migrations
+
+mysql:
+  Host: mysql
+  Port: 3306
+  User: root
+  Password: 1234
+  DBName: go01-airbnb
+
+aws:
+  Region: ap-southeast-1
+  APIKey: AKIAYD2VAGODCV63YOUI
+  SecretKey: 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
+  S3Domain: dbks3d875ahrq.cloudfront.net
+  S3Bucket: go01-airbnb
+
+redis:
+  Host: redis
+  Port: 6379
+  Password: ""
+  DBName: 0
